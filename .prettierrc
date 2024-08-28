@@ -9,5 +9,6 @@
   "proseWrap": "preserve",
   "useTabs": false,
   "bracketSpacing": true,
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "plugins": ["prettier-plugin-prisma"]
 }

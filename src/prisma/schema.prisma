@@ -1,0 +1,65 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DB_URL")
+}
+
+model User {
+    id        String   @id @default(cuid())
+    email     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    stories   Story[]
+    answers   Answer[]
+}
+
+model Story {
+    id             String   @id @default(cuid())
+    title          String
+    description    String
+    aiContentFeed  String
+    startingNode   Node     @relation("StoryToStartingNode", fields: [startingNodeId], references: [id])
+    startingNodeId String   @unique
+    allNodes       Node[]   @relation("StoryToAllNodes")
+    author         User     @relation(fields: [authorId], references: [id])
+    authorId       String
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+}
+
+model Node {
+    id             String        @id @default(cuid())
+    isGameOver     Boolean
+    storySummary   String
+    aiContentFeed  String
+    variants       NodeVariant[]
+    story          Story         @relation("StoryToAllNodes", fields: [storyId], references: [id])
+    storyId        String        @unique
+    startingNodeOf Story?        @relation("StoryToStartingNode")
+
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    previousAnswer Answer?
+}
+
+model NodeVariant {
+    id           String   @id @default(cuid())
+    content      String
+    parentNode   Node     @relation(fields: [parentNodeId], references: [id])
+    parentNodeId String
+    answers      Answer[]
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+}
+
+model Answer {
+    id                  String      @id @default(cuid())
+    text                String
+    votes               Int         @default(1)
+    parentNodeVariant   NodeVariant @relation(fields: [parentNodeVariantId], references: [id])
+    parentNodeVariantId String
+    nextNode            Node        @relation(fields: [nextNodeId], references: [id])
+    nextNodeId          String      @unique
+    voters              User[]
+    createdAt           DateTime    @default(now())
+    updatedAt           DateTime    @updatedAt
+}
