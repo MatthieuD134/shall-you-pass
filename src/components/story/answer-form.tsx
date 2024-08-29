@@ -2,7 +2,7 @@
 
 import postAnswer from '@/server-actions/post-answer';
 import { Input } from '../ui/input';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import SubmitFormButton from './submit-form-button';
 import { Node, NodeVariant, Prisma } from '@prisma/client';
 import { z } from 'zod';
@@ -41,6 +41,11 @@ export default function AnswerForm({ node }: { node: NodeWithVariants }) {
   const [currentNodeVariant, setCurrentNodeVariant] = useState<NodeVariant>(node.variants[0]);
   const [currentNode, setCurrentNode] = useState<Node>(node);
 
+  // add breaklines when encountering "\n"
+  const contentParagraphs = useMemo(() => {
+    return currentNodeVariant.content.split('\\n').map((line, index) => <p key={index}>{line}</p>);
+  }, [currentNodeVariant.content]);
+
   return (
     <Form {...form}>
       <form
@@ -67,7 +72,7 @@ export default function AnswerForm({ node }: { node: NodeWithVariants }) {
         }}
         className="flex w-full max-w-xl flex-col items-center gap-2"
       >
-        <p>{currentNodeVariant.content}</p>
+        <div className="flex flex-col gap-4">{contentParagraphs}</div>
         {currentNode.isGameOver ? (
           <>
             <h3 className="mt-4 text-xl font-bold">Game Over</h3>
@@ -87,11 +92,16 @@ export default function AnswerForm({ node }: { node: NodeWithVariants }) {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="mt-4 w-full">
-                  <Input placeholder="What should you do?" {...field} />
+                  <Input placeholder="Enter your answer..." {...field} />
                 </FormItem>
               )}
             />
-            <SubmitFormButton />
+            <div className="flex gap-2">
+              <Button disabled variant="outline">
+                Back
+              </Button>
+              <SubmitFormButton />
+            </div>
           </>
         )}
       </form>
