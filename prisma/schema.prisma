@@ -1,3 +1,7 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
 datasource db {
     provider = "postgresql"
     url      = env("DB_URL")
@@ -16,12 +20,11 @@ model Story {
     id             String   @id @default(cuid())
     title          String
     description    String
-    aiContentFeed  String
-    startingNode   Node     @relation("StoryToStartingNode", fields: [startingNodeId], references: [id])
-    startingNodeId String   @unique
+    startingNode   Node?    @relation("StoryToStartingNode", fields: [startingNodeId], references: [id])
+    startingNodeId String?  @unique
     allNodes       Node[]   @relation("StoryToAllNodes")
-    author         User     @relation(fields: [authorId], references: [id])
-    authorId       String
+    author         User?    @relation(fields: [authorId], references: [id])
+    authorId       String?
     createdAt      DateTime @default(now())
     updatedAt      DateTime @updatedAt
 }
@@ -29,21 +32,19 @@ model Story {
 model Node {
     id             String        @id @default(cuid())
     isGameOver     Boolean
-    storySummary   String
-    aiContentFeed  String
     variants       NodeVariant[]
     story          Story         @relation("StoryToAllNodes", fields: [storyId], references: [id])
-    storyId        String        @unique
+    storyId        String
     startingNodeOf Story?        @relation("StoryToStartingNode")
-
-    createdAt      DateTime @default(now())
-    updatedAt      DateTime @updatedAt
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
     previousAnswer Answer?
 }
 
 model NodeVariant {
     id           String   @id @default(cuid())
     content      String
+    storySummary String
     parentNode   Node     @relation(fields: [parentNodeId], references: [id])
     parentNodeId String
     answers      Answer[]

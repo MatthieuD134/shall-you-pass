@@ -1,7 +1,9 @@
+import StoryGameView from '@/components/story/story-game-view';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="text-3xl uppercase">shall you pass?</div>
+    <main className="mx-auto flex min-h-svh max-w-5xl flex-col items-center justify-between p-8">
+      <StoryGameView />
     </main>
   );
 }
