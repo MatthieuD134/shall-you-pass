@@ -9,13 +9,20 @@ import extraTrim from '@/utils/extra-trim';
 function validateResultJson(result: any) {
   if (!(result?.is_game_over === false || result?.is_game_over === true))
     throw new Error('No is_game_over in result');
+
   if (
     !(
       result?.variant_1 &&
       result?.variant_1?.text &&
       typeof result?.variant_1?.text === 'string' &&
       result?.variant_1?.summary &&
-      typeof result?.variant_1?.summary === 'string'
+      typeof result?.variant_1?.summary === 'string' &&
+      result?.variant_1?.suggestedAnswerOne &&
+      typeof result?.variant_1?.suggestedAnswerOne === 'string' &&
+      result?.variant_1?.suggestedAnswerTwo &&
+      typeof result?.variant_1?.suggestedAnswerTwo === 'string' &&
+      result?.variant_1?.suggestedAnswerThree &&
+      typeof result?.variant_1?.suggestedAnswerThree === 'string'
     )
   )
     throw new Error('No variant_1 in result');
@@ -25,7 +32,13 @@ function validateResultJson(result: any) {
       result?.variant_2?.text &&
       typeof result?.variant_2?.text === 'string' &&
       result?.variant_2?.summary &&
-      typeof result?.variant_2?.summary === 'string'
+      typeof result?.variant_2?.summary === 'string' &&
+      result?.variant_2?.suggestedAnswerOne &&
+      typeof result?.variant_2?.suggestedAnswerOne === 'string' &&
+      result?.variant_2?.suggestedAnswerTwo &&
+      typeof result?.variant_2?.suggestedAnswerTwo === 'string' &&
+      result?.variant_2?.suggestedAnswerThree &&
+      typeof result?.variant_2?.suggestedAnswerThree === 'string'
     )
   )
     throw new Error('No variant_2 in result');
@@ -35,7 +48,13 @@ function validateResultJson(result: any) {
       result?.variant_3?.text &&
       typeof result?.variant_3?.text === 'string' &&
       result?.variant_3?.summary &&
-      typeof result?.variant_3?.summary === 'string'
+      typeof result?.variant_3?.summary === 'string' &&
+      result?.variant_3?.suggestedAnswerOne &&
+      typeof result?.variant_3?.suggestedAnswerOne === 'string' &&
+      result?.variant_3?.suggestedAnswerTwo &&
+      typeof result?.variant_3?.suggestedAnswerTwo === 'string' &&
+      result?.variant_3?.suggestedAnswerThree &&
+      typeof result?.variant_3?.suggestedAnswerThree === 'string'
     )
   )
     throw new Error('No variant_3 in result');
@@ -45,7 +64,13 @@ function validateResultJson(result: any) {
       result?.variant_4?.text &&
       typeof result?.variant_4?.text === 'string' &&
       result?.variant_4?.summary &&
-      typeof result?.variant_4?.summary === 'string'
+      typeof result?.variant_4?.summary === 'string' &&
+      result?.variant_4?.suggestedAnswerOne &&
+      typeof result?.variant_4?.suggestedAnswerOne === 'string' &&
+      result?.variant_4?.suggestedAnswerTwo &&
+      typeof result?.variant_4?.suggestedAnswerTwo === 'string' &&
+      result?.variant_4?.suggestedAnswerThree &&
+      typeof result?.variant_4?.suggestedAnswerThree === 'string'
     )
   )
     throw new Error('No variant_4 in result');
@@ -55,7 +80,13 @@ function validateResultJson(result: any) {
       result?.variant_5?.text &&
       typeof result?.variant_5?.text === 'string' &&
       result?.variant_5?.summary &&
-      typeof result?.variant_5?.summary === 'string'
+      typeof result?.variant_5?.summary === 'string' &&
+      result?.variant_5?.suggestedAnswerOne &&
+      typeof result?.variant_5?.suggestedAnswerOne === 'string' &&
+      result?.variant_5?.suggestedAnswerTwo &&
+      typeof result?.variant_5?.suggestedAnswerTwo === 'string' &&
+      result?.variant_5?.suggestedAnswerThree &&
+      typeof result?.variant_5?.suggestedAnswerThree === 'string'
     )
   )
     throw new Error('No variant_5 in result');
@@ -164,11 +195,41 @@ export default async function postAnswer(formData: FormData) {
     // run validation on the result
     const validatedResult: {
       is_game_over: boolean;
-      variant_1: { text: string; summary: string };
-      variant_2: { text: string; summary: string };
-      variant_3: { text: string; summary: string };
-      variant_4: { text: string; summary: string };
-      variant_5: { text: string; summary: string };
+      variant_1: {
+        text: string;
+        summary: string;
+        suggestedAnswerOne: string;
+        suggestedAnswerTwo: string;
+        suggestedAnswerThree: string;
+      };
+      variant_2: {
+        text: string;
+        summary: string;
+        suggestedAnswerOne: string;
+        suggestedAnswerTwo: string;
+        suggestedAnswerThree: string;
+      };
+      variant_3: {
+        text: string;
+        summary: string;
+        suggestedAnswerOne: string;
+        suggestedAnswerTwo: string;
+        suggestedAnswerThree: string;
+      };
+      variant_4: {
+        text: string;
+        summary: string;
+        suggestedAnswerOne: string;
+        suggestedAnswerTwo: string;
+        suggestedAnswerThree: string;
+      };
+      variant_5: {
+        text: string;
+        summary: string;
+        suggestedAnswerOne: string;
+        suggestedAnswerTwo: string;
+        suggestedAnswerThree: string;
+      };
     } = validateResultJson(result);
 
     // save the next node to the database
@@ -184,22 +245,37 @@ export default async function postAnswer(formData: FormData) {
             {
               content: validatedResult.variant_1.text,
               storySummary: validatedResult.variant_1.summary,
+              suggestedAnswerOne: validatedResult.variant_1.suggestedAnswerOne,
+              suggestedAnswerTwo: validatedResult.variant_1.suggestedAnswerTwo,
+              suggestedAnswerThree: validatedResult.variant_1.suggestedAnswerThree,
             },
             {
               content: validatedResult.variant_2.text,
               storySummary: validatedResult.variant_2.summary,
+              suggestedAnswerOne: validatedResult.variant_2.suggestedAnswerOne,
+              suggestedAnswerTwo: validatedResult.variant_2.suggestedAnswerTwo,
+              suggestedAnswerThree: validatedResult.variant_2.suggestedAnswerThree,
             },
             {
               content: validatedResult.variant_3.text,
               storySummary: validatedResult.variant_3.summary,
+              suggestedAnswerOne: validatedResult.variant_3.suggestedAnswerOne,
+              suggestedAnswerTwo: validatedResult.variant_3.suggestedAnswerTwo,
+              suggestedAnswerThree: validatedResult.variant_3.suggestedAnswerThree,
             },
             {
               content: validatedResult.variant_4.text,
               storySummary: validatedResult.variant_4.summary,
+              suggestedAnswerOne: validatedResult.variant_4.suggestedAnswerOne,
+              suggestedAnswerTwo: validatedResult.variant_4.suggestedAnswerTwo,
+              suggestedAnswerThree: validatedResult.variant_4.suggestedAnswerThree,
             },
             {
               content: validatedResult.variant_5.text,
               storySummary: validatedResult.variant_5.summary,
+              suggestedAnswerOne: validatedResult.variant_5.suggestedAnswerOne,
+              suggestedAnswerTwo: validatedResult.variant_5.suggestedAnswerTwo,
+              suggestedAnswerThree: validatedResult.variant_5.suggestedAnswerThree,
             },
           ],
         },

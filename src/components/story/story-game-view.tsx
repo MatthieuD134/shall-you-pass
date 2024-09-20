@@ -2,10 +2,10 @@ import prisma from '@/lib/prisma';
 import StoryGrid from './story-grid';
 import AnswerForm from './answer-form';
 
-export default async function StoryGameView() {
+export default async function StoryGameView({ storyId }: { storyId: string }) {
   const story = await prisma.story.findFirst({
     where: {
-      id: 'cm0f9cntk000h0djo7n1p3dtv',
+      id: storyId,
     },
     include: {
       startingNode: {
@@ -18,10 +18,11 @@ export default async function StoryGameView() {
 
   return (
     <div className="flex w-full flex-col justify-between gap-32">
-      <div className="flex flex-col items-center gap-8">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-8">
         {story?.startingNode ? (
           <>
             <h1 className="text-3xl">{story.title}</h1>
+            <span className="h-px w-full bg-slate-300" />
             <AnswerForm node={story.startingNode} />
           </>
         ) : (

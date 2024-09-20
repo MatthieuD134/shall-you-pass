@@ -3,21 +3,36 @@ const aiStoryFeed = `{}=relevant before any other rules, text in curly braces, h
 is_game_over: **true or false**variant_1: {
 text: **the continuation of the story imagined by the 1st expert***,
 summary: **the summary of the story up to this point that takes into account the text of variant_1**
+suggestedAnswerOne: **the suggested answer for the user to choose**,
+suggestedAnswerTwo: **the suggested answer for the user to choose**,
+suggestedAnswerThree: **the suggested answer for the user to choose**,
 },variant_2: {
 text: **the continuation of the story imagined by the 2nd expert***,
 summary: **the summary of the story up to this point that takes into account the text of variant_2**
+suggestedAnswerOne: **the suggested answer for the user to choose**,
+suggestedAnswerTwo: **the suggested answer for the user to choose**,
+suggestedAnswerThree: **the suggested answer for the user to choose**,
 },
 variant_3: {
 text: **the continuation of the story imagined by the 3rd expert***,
 summary: **the summary of the story up to this point that takes into account the text of variant_3**
+suggestedAnswerOne: **the suggested answer for the user to choose**,
+suggestedAnswerTwo: **the suggested answer for the user to choose**,
+suggestedAnswerThree: **the suggested answer for the user to choose**,
 },
 variant_4: {
 text: **the continuation of the story imagined by the 4th expert***,
 summary: **the summary of the story up to this point that takes into account the text of variant_4**
+suggestedAnswerOne: **the suggested answer for the user to choose**,
+suggestedAnswerTwo: **the suggested answer for the user to choose**,
+suggestedAnswerThree: **the suggested answer for the user to choose**,
 },
 variant_5: {
 text: **the continuation of the story imagined by the 5th expert***,
 summary: **the summary of the story up to this point that takes into account the text of variant_5**
+suggestedAnswerOne: **the suggested answer for the user to choose**,
+suggestedAnswerTwo: **the suggested answer for the user to choose**,
+suggestedAnswerThree: **the suggested answer for the user to choose**,
 },}“”
 The experts must always keep relevant information in their summary, including important characters I met in the story, as well as information I learnt about their background or personality, including also the places I have visited, objects I have picked up, lost or anything that may have an influence on the story.}
 
